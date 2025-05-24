@@ -20,6 +20,9 @@ class Customer {
     get name() {
         return this._name;
     }
+    get address() {
+        return this._address;
+    }
     changeName(name) {
         this._name = name;
         this.validate();
