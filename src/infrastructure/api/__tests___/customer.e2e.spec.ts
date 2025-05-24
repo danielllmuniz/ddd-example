@@ -42,7 +42,7 @@ describe("E2E test for customer", () => {
   })
 
   it("should list a customer", async () => {
-    const customerResponse = await request(app)
+    await request(app)
       .post("/customer")
       .send({
         name: "Jane",
@@ -65,5 +65,15 @@ describe("E2E test for customer", () => {
     expect(response.body.customers[0].address.number).toBe(1234);
     expect(response.body.customers[0].address.zip).toBe("12345");
     expect(response.body.customers[0].address.city).toBe("City");
+
+    const listResponseXML = await request(app)
+      .get("/customer")
+      .set("Accept", "application/xml")
+      .send();
+
+    expect(listResponseXML.status).toBe(200);
+    expect(listResponseXML.text).toContain(
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+    );
   })
 })
